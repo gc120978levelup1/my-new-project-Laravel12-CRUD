@@ -42,6 +42,8 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 ### Launch Initial Data Migration in  (Git Bash Terminal)
 
 ```sh
+php artisan key:generate
+php artisan storage:link
 ./ss migrate
 ```
 
@@ -63,7 +65,7 @@ ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001/)
 ```sh
 ./ss dev
 ```
-### Uou can NOW Open Your [Development Site!!!](http://127.0.0.1:8000/)
+### You can NOW Open Your [Development Site!!!](http://127.0.0.1:8000/)
 
 You can now be able to start coding your application and see the changes on the development site rite away.
 
