@@ -30,14 +30,14 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Complaints') }}</title>
+        <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+
         @routes
         @vite(['resources/js/app.ts'])
         @inertiaHead
-        <link rel="icon" type="image/x-icon" href="/storage/favicon.jpg">
     </head>
     <body class="font-sans antialiased">
         @inertia

@@ -398,9 +398,9 @@
             ),
         ),
         'inertiajs/inertia-laravel' => array(
-            'pretty_version' => 'v2.0.1',
-            'version' => '2.0.1.0',
-            'reference' => 'd855ad18bcaae883e307619370d8c3dcfb5adbaa',
+            'pretty_version' => 'v2.0.2',
+            'version' => '2.0.2.0',
+            'reference' => '248e815cf8d41307cbfb735efaa514c118e2f3b4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../inertiajs/inertia-laravel',
             'aliases' => array(),
