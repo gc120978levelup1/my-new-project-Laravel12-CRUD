@@ -38,6 +38,9 @@
         @routes
         @vite(['resources/js/app.ts'])
         @inertiaHead
+
+        <link rel="icon" type="image/x-icon" href="/storage/favicon.jpg">
+
     </head>
     <body class="font-sans antialiased">
         @inertia
