@@ -16,7 +16,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Complains',
-        href: '/complaint/create',
+        href: '/complaint',
         icon: CloudMoon,
     },
 ];
