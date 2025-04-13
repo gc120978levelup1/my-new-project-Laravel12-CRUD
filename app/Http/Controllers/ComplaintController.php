@@ -15,11 +15,19 @@ class ComplaintController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(StoreComplaintRequest $request)
     {
-        return Inertia::render('viewjs/complaint/index', [
-            'complaints' => Complaint::get()
-        ]);
+        if ($request["accountnumber"]) { // if index has search parameter
+            //('column', 'like', '%SearchString%')
+            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->get();
+            return Inertia::render('viewjs/complaint/index', [
+                'complaints' => $complaint,
+                'accountnumber' => $request["accountnumber"],
+            ]);
+        } else // if index has no search parameter
+            return Inertia::render('viewjs/complaint/index', [
+                'complaints' => Complaint::get()
+            ]);
     }
 
     /**
@@ -44,7 +52,8 @@ class ComplaintController extends Controller
 
             $request->merge([
                 // aws S3 file upload
-                'picture' => $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
+                //'picture' => $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
+                'picture' =>  "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
             ]);
         }
         $complaint = Complaint::create($request->all());

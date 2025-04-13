@@ -22,9 +22,10 @@ import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
 interface Props {
     complaints: { type: Array, },
+    accountnumber : string,
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const headTitle = "Complaint Master List";
 const description = "Master lisr of customer complaint.";
@@ -37,14 +38,11 @@ const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
 
 const form = useForm({
-    'accountnumber': "",
-    'name': "",
-    'address': "",
-    'description': "",
+    'accountnumber': props.accountnumber,
 });
 
 const submit = () => {
-    form.post(route('complaint.post'), {
+    form.get(route('complaint.index'), {
         preserveScroll: true,
     });
 };
