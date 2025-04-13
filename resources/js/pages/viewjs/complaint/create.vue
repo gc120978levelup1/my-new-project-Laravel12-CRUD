@@ -105,17 +105,17 @@ const submit = () => {
                             <img :src="imageURL" alt="" srcset="" class="border-2 rounded-lg">
                         </div>
                         <Input type="file" accept="image/*" @change="onPictureChange" id="picture"
-                            class="mt-1 block w-full" required autocomplete="picture" placeholder="picture" />
+                            class="mt-1 block w-full" autocomplete="picture" placeholder="picture" />
                         <InputError class="mt-2" :message="form.errors.picture" />
                     </div>
 
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
-                            <Button :disabled="form.processing">Save</Button>
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
                             </Transition>
+                            <Button :disabled="form.processing">Save</Button>
                         </div>
                     </div>
                 </form>
