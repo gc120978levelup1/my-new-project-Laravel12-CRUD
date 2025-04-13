@@ -56,7 +56,7 @@ class ComplaintController extends Controller
                 //'picture' => $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
                 //'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file'), 'public'),
                 //'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::disk('gdisk01')->put('images', $request->file('image_file')),
-                'picture' =>  'https://fls-9eaa2509-0ce6-4f12-a40a-e4d4a34152c3.laravel.cloud' . "/" . Storage::disk('gdisk01')->put('images', $request->file('image_file')),
+                'picture' =>  Env::$AWS_URL . "/" . Storage::disk('gdisk01')->put('images', $request->file('image_file')),
             ]);
         }
         $complaint = Complaint::create($request->all());
