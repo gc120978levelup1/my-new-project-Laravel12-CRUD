@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 
 import {
@@ -106,23 +105,22 @@ const submit = () => {
                             <tbody>
                                 <tr v-for="(complaint, index) in complaints" :key="index"
                                     class="border-b border-neutral-200 dark:border-white/10">
-                                    <td class="whitespace-nowrap px-6 py-3">
-
+                                    <td class="flex whitespace-nowrap px-6 py-3">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
-                                                <div class="flex items-center space-x-2 border border-neutral-200 dark:border-white/10 rounded-full p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <div
+                                                    class="flex items-center space-x-2 border border-neutral-200 dark:border-white/10 rounded-full p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
                                                     >>
                                                 </div>
-
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <div
-                                                    class="flex flex-col p-2 space-y-2 border-b border-neutral-200 dark:border-white/10">
+                                                    class="flex p-2 space-y-2 border-b border-neutral-200 dark:border-white/10">
                                                     <Link :href="route(
                                                         'complaint.show',
                                                         [complaint.id]
                                                     )
-                                                        " class="p-2 px-5 rounded my-auto text-white bg-green-600">
+                                                        " class="p-2 px-5 rounded my-auto text-white bg-green-600 m-2">
                                                     View
                                                     </Link>
 
@@ -130,11 +128,11 @@ const submit = () => {
                                                         'complaint.edit',
                                                         { id: complaint.id }
                                                     )
-                                                        " class="p-2 px-6 rounded my-auto text-white bg-blue-500">
+                                                        " class="p-2 px-6 rounded my-auto text-white bg-blue-500 m-2">
                                                     Edit
                                                     </Link>
 
-                                                    <DangerButton class="p-2 rounded my-auto text-white bg-red-500"
+                                                    <DangerButton class="p-2 rounded my-auto text-white bg-red-500 m-2"
                                                         @click="
                                                             deleteEvent(
                                                                 complaint.id
@@ -146,7 +144,9 @@ const submit = () => {
 
                                             </DropdownMenuContent>
                                         </DropdownMenu>
-
+                                        <div v-if="complaint.picture" class="grid gap-2 w-[50px]">
+                                            <img :src="complaint.picture" alt="" srcset="" class="border-2 rounded-lg">
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-4">
                                         {{ complaint.id }}

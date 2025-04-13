@@ -93,6 +93,10 @@ const submit = () => {
                     <div v-if="form.picture" class="grid gap-2">
                         <img :src="form.picture" alt="" srcset="" class="border-2 rounded-lg">
                     </div>
+                    
+                    <div class="grid gap-2">
+                        <span class="">{{ form.picture }}</span>
+                    </div>
 
                     <div class="grid gap-2">
                         <Label for="created_at">Created At</Label>

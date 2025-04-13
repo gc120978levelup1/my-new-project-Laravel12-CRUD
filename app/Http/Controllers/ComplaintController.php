@@ -37,15 +37,23 @@ class ComplaintController extends Controller
     {
         // saving and extracting uploaed picture
         if ($request->hasFile('image_file')) {
+            //$request->merge([
+            //    // local file upload
+            //    'picture' => '/storage/' . $request->file('image_file')->store('pictures', 'public'),
+            //]);
+
             $request->merge([
-                'picture' => '/storage/' . $request->file('image_file')->store('pictures', 'public'),
+                // aws S3 file upload
+                'picture' => $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
             ]);
         }
         $complaint = Complaint::create($request->all());
         return redirect()->route(
-            'complaint.show', [
+            'complaint.show',
+            [
                 'complaint' => $complaint
-        ]);
+            ]
+        );
     }
 
     /**
@@ -78,15 +86,22 @@ class ComplaintController extends Controller
         // if update includes saving images, it should ne called by post not put or patch
         // saving and extracting uploaed picture
         if ($request->hasFile('image_file')) {
-            if ($request['picture'] != null){
+            if ($request['picture'] != null) {
                 $originalString = $request['picture'];
                 $searchString = '/storage/';
                 $replaceString = '';
                 $newString = Str::replace($searchString, $replaceString, $originalString);
-                Storage::delete($newString);
+                //Storage::delete($newString);
             }
+
+            //$request->merge([
+            //    // local file upload
+            //    'picture' => '/storage/' . $request->file('image_file')->store('images', 'public'),
+            //]);
+
             $request->merge([
-                'picture' => '/storage/' . $request->file('image_file')->store('pictures', 'public'),
+                // aws S3 file upload
+                'picture' => $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
             ]);
         }
         $complaint->update($request->all());
