@@ -39,7 +39,7 @@
         @vite(['resources/js/app.ts'])
         @inertiaHead
 
-        <link rel="icon" type="image/x-icon" href="/storage/favicon.jpg">
+        <link rel="icon" type="image/x-icon" href="favicon.jpg">
 
     </head>
     <body class="font-sans antialiased">
