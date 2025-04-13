@@ -13,7 +13,6 @@ return [
     'AWS_URL8' => '',
     'AWS_URL9' => '',
     'AWS_URL10' => '',
-    'AWS_URL10' => '',
     
     'SUB_FOLDER1' => '/images',
     'SUB_FOLDER2' => '',
@@ -27,7 +26,7 @@ return [
     'SUB_FOLDER10' => '',
 
     'BUCKET_DISK1' => 's3',
-    'BUCKET_DISK2' => 's2',
+    'BUCKET_DISK2' => 'r2',
     'BUCKET_DISK3' => 'gdisk01',
     'BUCKET_DISK4' => '',
     'BUCKET_DISK5' => '',
@@ -36,6 +35,4 @@ return [
     'BUCKET_DISK8' => '',
     'BUCKET_DISK9' => '',
     'BUCKET_DISK10' => '',
-
-    '' => '',
-]
+];
