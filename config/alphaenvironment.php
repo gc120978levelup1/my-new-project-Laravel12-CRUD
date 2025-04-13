@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'LOCAL_URL' => '/storage',
+    'LOCAL_URL' => '/storage/',
     
-    'AWS_URL1' => 'https://fls-9eaa2509-0ce6-4f12-a40a-e4d4a34152c3.laravel.cloud',
+    'AWS_URL1' => 'https://fls-9eaa2509-0ce6-4f12-a40a-e4d4a34152c3.laravel.cloud/',
     'AWS_URL2' => '',
     'AWS_URL3' => '',
     'AWS_URL4' => '',
@@ -14,7 +14,7 @@ return [
     'AWS_URL9' => '',
     'AWS_URL10' => '',
     
-    'SUB_FOLDER1' => '/images',
+    'SUB_FOLDER1' => 'images',
     'SUB_FOLDER2' => '',
     'SUB_FOLDER3' => '',
     'SUB_FOLDER4' => '',
