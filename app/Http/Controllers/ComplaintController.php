@@ -53,7 +53,9 @@ class ComplaintController extends Controller
             $request->merge([
                 // aws S3 file upload
                 //'picture' => $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file')),
-                'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file'), 'public'),
+                //'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file'), 'public'),
+                'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::put('images', $request->file('image_file')),
+
             ]);
         }
         $complaint = Complaint::create($request->all());
@@ -110,7 +112,8 @@ class ComplaintController extends Controller
 
             $request->merge([
                 // aws S3 file upload
-                'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file'), 'public'),
+                //'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::disk('s3')->put('images', $request->file('image_file'), 'public'),
+                'picture' =>  $_ENV['AWS_URL'] . "/" . Storage::put('images', $request->file('image_file')),
             ]);
         }
         $complaint->update($request->all());
