@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
   Route::get ('/complaint/{complaint}/edit', [ComplaintController::class, 'edit'])->name('complaint.edit');
   Route::post('/complaint/{complaint}/update', [ComplaintController::class, 'update'])->name('complaint.update');
   Route::get ('/complaint/{complaint}/show', [ComplaintController::class, 'show'])->name('complaint.show');
+  Route::get ('/complaint/{complaint}/delete', [ComplaintController::class, 'destroy'])->name('complaint.delete');
 });
 
 

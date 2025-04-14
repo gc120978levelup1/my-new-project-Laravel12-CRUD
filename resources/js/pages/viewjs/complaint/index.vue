@@ -9,6 +9,17 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
+import {ref, onMounted} from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
@@ -42,10 +53,13 @@ const form = useForm({
 });
 
 const submit = () => {
+    raccountnumber.focus();
     form.get(route('complaint.index'), {
         preserveScroll: true,
     });
 };
+
+
 </script>
 
 <template>
@@ -55,18 +69,20 @@ const submit = () => {
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
-                <form @submit.prevent="submit" class="space-y-6">
-
-                    <div class="grid gap-2">
+                <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
-                        <Input id="accountnumber" class="mt-1 block w-full" v-model="form.accountnumber" required
+                        <Input id="accountnumber" class="mt-1 block w-full" required
+                            ref="accountnumber"
+                            v-model="form.accountnumber"
+                            autofocus
+                            @input="input"
                             autocomplete="accountnumber" placeholder="accountnumber" />
                         <InputError class="mt-2" :message="form.errors.accountnumber" />
                     </div>
-
+                <form @submit.prevent="submit" class="space-y-6" ref="myForm">                  
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
-                            <Button :disabled="form.processing">Search</Button>
+                            <Button :disabled="form.processing" @click="click">Search</Button>
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
@@ -130,14 +146,81 @@ const submit = () => {
                                                     Edit
                                                     </Link>
 
-                                                    <DangerButton class="p-2 rounded my-auto text-white bg-red-500 m-2"
-                                                        @click="
-                                                            deleteEvent(
-                                                                complaint.id
-                                                            )
-                                                            ">
-                                                        Delete
-                                                    </DangerButton>
+                                                    <Dialog>
+                                                        <DialogTrigger asChild>
+                                                            <Button :disabled="form.processing"
+                                                                class="p-2 px-4 rounded my-auto text-white text-white bg-red-500 m-2">
+                                                                Delete
+                                                            </Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent class="!max-w-fit max-h-full p-3 overflow-auto">
+                                                            <DialogHeader>
+                                                                <DialogTitle>
+                                                                    <span class="text-red-500 text-3xl py-4">Delete</span> 
+                                                                </DialogTitle>
+                                                                <DialogDescription>
+                                                                    Are you sure to DELETE this item?
+                                                                </DialogDescription>
+                                                            </DialogHeader>
+                                                            <div className="py-0">
+                                                                <div className="flex flex-col sm:flex-row items-center gap-4">
+                                                                    <div v-if="complaint.picture"
+                                                                        class="w-full">
+                                                                        <img :src="complaint.picture" alt="" srcset=""
+                                                                            class="border-2 rounded-lg">
+                                                                    </div>
+                                                                    <div className="flex flex-col gap-2 py-4">
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="accountnumber">
+                                                                                Account Number : &nbsp;&nbsp;{{ complaint.accountnumber }}
+                                                                            </Label>    
+                                                                        </div>
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="name">
+                                                                                Name : &nbsp;&nbsp;{{ complaint.name }}
+                                                                            </Label>
+                                                                        </div>
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="complaint">
+                                                                                Address : &nbsp;&nbsp;{{ complaint.address }}
+                                                                            </Label>
+                                                                        </div>
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="complaint">
+                                                                                Complaint : &nbsp;&nbsp;{{ complaint.complaint }}
+                                                                            </Label>
+                                                                        </div>
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="description">
+                                                                                Description : &nbsp;&nbsp;{{ complaint.description }}
+                                                                            </Label>
+                                                                        </div>
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="created_at">
+                                                                                created_at : &nbsp;&nbsp;{{ complaint.created_at }}
+                                                                            </Label>
+                                                                        </div>
+                                                                        <div  className="grid items-center gap-2 w-100">
+                                                                            <Label for="updated_at">
+                                                                                updated_at : &nbsp;&nbsp;{{ complaint.updated_at }}
+                                                                            </Label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <DialogFooter>
+                                                                <Link :href="route(
+                                                                    'complaint.delete',
+                                                                    { id: complaint.id })"
+                                                                    
+                                                                    class="p-2 px-6 rounded my-auto text-white bg-red-500 m-1">
+                                                                Confirm Delete
+                                                                </Link>
+                                                            </DialogFooter>
+                                                        </DialogContent>
+                                                    </Dialog>                                                    
+                                                    
                                                 </div>
 
                                             </DropdownMenuContent>
