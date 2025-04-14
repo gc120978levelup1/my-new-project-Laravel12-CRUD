@@ -19,14 +19,15 @@ class ComplaintController extends Controller
     {
         if ($request["accountnumber"]) { // if index has search parameter
             //('column', 'like', '%SearchString%')
-            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->get();
+            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->cursorPaginate(3);
             return Inertia::render('viewjs/complaint/index', [
-                'complaints' => $complaint,
+                'pagination' => $complaint,
                 'accountnumber' => $request["accountnumber"],
             ]);
         } else // if index has no search parameter
             return Inertia::render('viewjs/complaint/index', [
-                'complaints' => Complaint::get()
+                //'complaints' => Complaint::get()
+                'pagination' => Complaint::where("accountnumber","like","%")->cursorPaginate(3),
             ]);
     }
 
@@ -52,7 +53,7 @@ class ComplaintController extends Controller
 
             $request->merge([
                 // remote file upload
-                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
+                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK1'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
             ]);
         }
         $complaint = Complaint::create($request->all());
