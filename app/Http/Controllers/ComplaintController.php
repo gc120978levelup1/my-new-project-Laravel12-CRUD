@@ -52,7 +52,7 @@ class ComplaintController extends Controller
 
             $request->merge([
                 // remote file upload
-                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK1'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
+                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
             ]);
         }
         $complaint = Complaint::create($request->all());
@@ -101,7 +101,7 @@ class ComplaintController extends Controller
 
             $request->merge([
                 // remote file upload
-                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK1'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
+                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
             ]);
         }
         $complaint->update($request->all());
