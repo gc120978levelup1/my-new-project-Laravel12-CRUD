@@ -1,1 +1,2 @@
 buang ka
+nuang
