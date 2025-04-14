@@ -69,17 +69,17 @@ const submit = () => {
             <div class="flex flex-col space-y-6">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
                 <form @submit.prevent="submit" class="space-y-6" ref="myForm">                  
-                    <div class="flex items-center gap-4">
-                        <div class="grid gap-2">
-                            <Label for="accountnumber">Account Number</Label>
-                            <Input id="accountnumber" class="mt-1 block w-full" required
-                                ref="accountnumber"
-                                v-model="form.accountnumber"
-                                autofocus
-                                @input="input"
-                                autocomplete="accountnumber" placeholder="accountnumber" />
-                            <InputError class="mt-2" :message="form.errors.accountnumber" />
-                        </div>
+                     <div class="grid gap-2">
+                        <Label for="accountnumber">Account Number</Label>
+                        <Input id="accountnumber" class="mt-1 block w-full" required
+                            ref="accountnumber"
+                            v-model="form.accountnumber"
+                            autofocus
+                            @input="input"
+                            autocomplete="accountnumber" placeholder="accountnumber" />
+                        <InputError class="mt-2" :message="form.errors.accountnumber" />
+                    </div>
+                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
                             <Button :disabled="form.processing" @click="click">Search</Button>
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
