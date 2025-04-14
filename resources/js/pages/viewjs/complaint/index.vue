@@ -206,8 +206,8 @@ const submit = () => {
                                                                 <Link :href="route(
                                                                     'complaint.delete',
                                                                     { id: complaint.id })"
-                                                                    class="p-2 px-6 rounded my-auto text-white bg-red-500 m-1">
-                                                                Confirm Delete
+                                                                    class="flex p-2 px-1 rounded my-auto text-white bg-red-500 m-1 justify-center items-center w-35">
+                                                                    Delete Forever
                                                                 </Link>
                                                             </DialogFooter>
                                                         </DialogContent>
@@ -240,13 +240,13 @@ const submit = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="flex flex-col gap-4 p-4 sm:flex-row justify-center items-center min-w-2xs">
-                        <Link :href="prev_page_url" class="flex p-2 px-6 rounded text-white bg-red-500 m-1 w-100 sm:w-1/3 justify-center items-center"
+                    <div className="flex flex-row gap-4 p-4 sm:flex-row justify-center items-center min-w-2xs">
+                        <Link :href="prev_page_url" class="flex p-2 px-2 rounded text-white bg-red-500 m-1 w-28 sm:w-28 justify-center items-center"
                             :class="{ disabled: prev_page_url }">
                         <<| Previous
                         </Link>
                         <Link :href="next_page_url"
-                            class="flex p-2 px-6 rounded text-white bg-red-500 m-1 w-100 sm:w-1/3  sm:ml-auto justify-center items-center"
+                            class="flex p-2 px-2 rounded text-white bg-red-500 m-1 w-28 sm:w-28  sm:ml-auto justify-center items-center"
                             :class="{ disabled: next_page_url }">
                         Next |>>
                         </Link>
