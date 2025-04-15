@@ -31,6 +31,25 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'vue-sonner'
+
+const url = new URL(window.location);
+const messagemain = url.searchParams.get('messagemain');
+const messagedescription = url.searchParams.get('messagedescription');
+onMounted(() => {
+    if (messagemain) {
+        toast(messagemain, {
+            description: messagedescription,
+            action: {
+                label: 'Ok',
+                onClick: () => console.log('OK'),
+            },
+        });
+    }
+});
+
+
 interface Props {
     pagination: { type: Array, },
     accountnumber: string,
@@ -47,7 +66,7 @@ const xx = ref(props.pagination);
 const yy = ref(JSON.stringify(xx.value));
 
 const headTitle = "Complaint Master List";
-const description = "Master lisr of customer complaint.";
+const description = "Master list of customer complaint.";
 const breadcrumbs: BreadcrumbItem[] = [{
     title: 'Complaint Index',
     href: '/complaint',
@@ -69,21 +88,33 @@ const submit = () => {
 </script>
 
 <template>
+    <Toaster />
     <AppLayout :breadcrumbs="breadcrumbs">
 
         <Head v-bind:title="headTitle" />
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
+                <div class="text-gray-900 dark:text-gray-100 border rounded">
 
+                    <div className="flex flex-row gap-4 p-2 sm:flex-row justify-center items-center min-w-2xs">
+                        <Link :href="prev_page_url" class="flex p-2 px-2 rounded  text-gray-400 bg-red-950 m-1 w-10 sm:w-10 justify-center items-center"
+                            :class="{ disabled: prev_page_url }">
+                            <<|
+                        </Link>
+                        <Link :href="next_page_url"
+                            class="flex p-2 px-2 rounded  text-gray-400 bg-red-950 m-1 w-10 sm:w-10  ml-auto justify-center items-center"
+                            :class="{ disabled: next_page_url }">
+                            |>>
+                        </Link>
+                    </div>
 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="overflow-auto p-2 border rounded">
+                    <div class="overflow-auto border rounded">
                         <table class="min-w-full text-left text-sm font-dark text-surface dark:text-white">
-                            <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
+                            <thead class="border-b border-neutral-200 font-medium dark:border-white/10 bg-gray-950">
                                 <tr>
                                     <th scope="col" class="px-1 py-4">
-                                        Action
+                                        &nbsp;&nbsp;&nbsp;Action
                                     </th>
                                     <th scope="col" class="px-3 py-4">
                                         #
@@ -105,12 +136,12 @@ const submit = () => {
                             <tbody>
                                 <tr v-for="(complaint, index) in complaints" :key="index"
                                     class="border-b border-neutral-200 dark:border-white/10">
-                                    <td class="flex whitespace-nowrap px-6 py-3">
+                                    <td class="flex whitespace-nowrap px-6 py-1">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
                                                 <div
-                                                    class="flex items-center space-x-2 border border-neutral-200 dark:border-white/10 rounded-full p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
-                                                    >>
+                                                    class="mr-2 h-6 flex items-center space-x-2 border border-neutral-200 dark:border-white/10 rounded-full p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                    ⋮
                                                 </div>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
@@ -221,39 +252,29 @@ const submit = () => {
                                             <img :src="complaint.picture" alt="" srcset="" class="border-2 rounded-lg">
                                         </div>
                                     </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    <td class="whitespace-nowrap px-6 py-2">
                                         {{ complaint.id }}
                                     </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    <td class="whitespace-nowrap px-6 py-2">
                                         {{ complaint.accountnumber }}
                                     </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    <td class="whitespace-nowrap px-6 py-2">
                                         {{ complaint.name }}
                                     </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    <td class="whitespace-nowrap px-6 py-2">
                                         {{ complaint.address }}
                                     </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    <td class="whitespace-nowrap px-6 py-2">
                                         {{ complaint.description }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div className="flex flex-row gap-4 p-4 sm:flex-row justify-center items-center min-w-2xs">
-                        <Link :href="prev_page_url" class="flex p-2 px-2 rounded text-white bg-red-500 m-1 w-28 sm:w-28 justify-center items-center"
-                            :class="{ disabled: prev_page_url }">
-                        <<| Previous
-                        </Link>
-                        <Link :href="next_page_url"
-                            class="flex p-2 px-2 rounded text-white bg-red-500 m-1 w-28 sm:w-28  sm:ml-auto justify-center items-center"
-                            :class="{ disabled: next_page_url }">
-                        Next |>>
-                        </Link>
-                    </div>
 
                 </div>
 
+                <!---
                 <form @submit.prevent="submit" class="space-y-6" ref="myForm">
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
@@ -272,6 +293,7 @@ const submit = () => {
                         </div>
                     </div>
                 </form>
+                -->
 
             </div>
         </SettingsLayout>

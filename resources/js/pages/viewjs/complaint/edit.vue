@@ -62,7 +62,7 @@ const submit = () => {
 
         <Head v-bind:title="headTitle" />
         <SettingsLayout>
-            <div class="flex flex-col space-y-6">
+            <div class="flex flex-col space-y-6  max-w-xl">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">

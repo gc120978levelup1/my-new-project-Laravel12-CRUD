@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-
+import { ref, onMounted } from 'vue';
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
@@ -11,8 +11,27 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
+import { Toaster } from '@/components/ui/sonner'
+import { toast } from 'vue-sonner'
+
+const url = new URL(window.location);
+const messagemain = url.searchParams.get('messagemain');
+const messagedescription = url.searchParams.get('messagedescription');
+onMounted(() => {
+    if (messagemain) {
+        toast(messagemain, {
+            description: messagedescription,
+            action: {
+                label: 'Ok',
+                onClick: () => console.log('OK'),
+            },
+        });
+    }
+});
+
 interface Props {
     complaint: Object,
+    message: Object,
 }
 
 const props = defineProps<Props>();
@@ -45,15 +64,18 @@ const submit = () => {
         preserveScroll: true,
     });
 };
+
 </script>
 
 <template>
+    <Toaster />
     <AppLayout :breadcrumbs="breadcrumbs">
 
         <Head v-bind:title="headTitle" />
         <SettingsLayout>
-            <div class="flex flex-col space-y-6">
+            <div class="flex flex-col space-y-6 max-w-xl">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
+
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
@@ -93,7 +115,7 @@ const submit = () => {
                     <div v-if="form.picture" class="grid gap-2">
                         <img :src="form.picture" alt="" srcset="" class="border-2 rounded-lg">
                     </div>
-                    
+
                     <div class="grid gap-2">
                         <span class="">{{ form.picture }}</span>
                     </div>

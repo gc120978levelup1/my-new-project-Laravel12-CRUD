@@ -16,6 +16,7 @@ use App\Http\Controllers\ComplaintController;
 Route::middleware('auth')->group(function () {
   Route::get ('/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
   Route::get ('/complaint/create', [ComplaintController::class, 'create'])->name('complaint.create');
+  Route::get ('/complaint/search', [ComplaintController::class, 'search'])->name('complaint.search');
   Route::post('/complaint/post', [ComplaintController::class, 'store'])->name('complaint.post');
   Route::get ('/complaint/{complaint}/edit', [ComplaintController::class, 'edit'])->name('complaint.edit');
   Route::post('/complaint/{complaint}/update', [ComplaintController::class, 'update'])->name('complaint.update');

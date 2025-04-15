@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateComplaintRequest;
 
 class ComplaintController extends Controller
 {
+    private $message;
     /**
      * Display a listing of the resource.
      */
@@ -19,7 +20,7 @@ class ComplaintController extends Controller
     {
         if ($request["accountnumber"]) { // if index has search parameter
             //('column', 'like', '%SearchString%')
-            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->cursorPaginate(3);
+            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->cursorPaginate(5);
             return Inertia::render('viewjs/complaint/index', [
                 'pagination' => $complaint,
                 'accountnumber' => $request["accountnumber"],
@@ -27,7 +28,7 @@ class ComplaintController extends Controller
         } else // if index has no search parameter
             return Inertia::render('viewjs/complaint/index', [
                 //'complaints' => Complaint::get()
-                'pagination' => Complaint::where("accountnumber","like","%")->cursorPaginate(3),
+                'pagination' => Complaint::where("accountnumber","like","%")->cursorPaginate(5),
             ]);
     }
 
@@ -37,6 +38,16 @@ class ComplaintController extends Controller
     public function create()
     {
         return Inertia::render('viewjs/complaint/create');
+    }
+
+
+    /**
+     * Show the form for searching resource.
+     */
+    public function search()
+    {
+
+        return Inertia::render('viewjs/complaint/search');
     }
 
     /**
@@ -57,10 +68,20 @@ class ComplaintController extends Controller
             ]);
         }
         $complaint = Complaint::create($request->all());
+
+        $messagemain  = 'Nothing was saved.';
+        $messagedescription = '::: '. ' xxxxxxxxx ' .' >>>';
+        if ($complaint) {
+            $messagemain  =  'New row data with ID: '. $complaint->accountnumber .' is successfully saved.';
+            $messagedescription = '::: '. $complaint->updated_at .' >>>';
+        };
+
         return redirect()->route(
             'complaint.show',
             [
-                'complaint' => $complaint
+                'complaint' => $complaint,
+                'messagemain'        => $messagemain,
+                'messagedescription' => $messagedescription
             ]
         );
     }
@@ -72,7 +93,9 @@ class ComplaintController extends Controller
     {
         return Inertia::render(
             'viewjs/complaint/show',
-            ['complaint' => $complaint]
+            [
+                'complaint' => $complaint,
+            ]
         );
     }
 
@@ -106,7 +129,22 @@ class ComplaintController extends Controller
             ]);
         }
         $complaint->update($request->all());
-        return redirect()->route('complaint.show', ['complaint' => $complaint]);
+
+        $messagemain  = 'Nothing was saved.';
+        $messagedescription = '::: '. ' xxxxxxxxx ' .' >>>';
+        if ($complaint) {
+            $messagemain  =  'Existing row data with ID: '. $complaint->accountnumber .' is successfully modified and saved.';
+            $messagedescription = '::: '. $complaint->updated_at .' >>>';
+        };
+
+        return redirect()->route(
+            'complaint.show',
+            [
+                'complaint' => $complaint,
+                'messagemain'        => $messagemain,
+                'messagedescription' => $messagedescription
+            ]
+        );
     }
 
     /**
@@ -114,9 +152,18 @@ class ComplaintController extends Controller
      */
     public function destroy(Complaint $complaint)
     {
+        $messagemain  = 'Nothing was deleted.';
+        $messagedescription = '::: '. ' xxxxxxxxx ' .' >>>';
+        if ($complaint) {
+            $messagemain  =  'Existing row data with ID: '. $complaint->accountnumber .' was forever deleted.';
+            $messagedescription = 'Last Modified : '. $complaint->updated_at .' >>>';
+        };
         $complaint->deleteOrFail();
         return redirect()->route(
-            'complaint.index',
+            'complaint.index',[
+                'messagemain'        => $messagemain,
+                'messagedescription' => $messagedescription
+            ]
         );
     }
 }

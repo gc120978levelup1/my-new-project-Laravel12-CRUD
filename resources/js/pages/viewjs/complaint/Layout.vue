@@ -7,8 +7,12 @@ import { Link, usePage } from '@inertiajs/vue3';
 
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Search',
+        title: 'Table',
         href: '/complaint',
+    },
+    {
+        title: 'Search',
+        href: '/complaint/search',
     },
     {
         title: 'New',
@@ -45,8 +49,8 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
 
             <Separator class="my-6 md:hidden" />
 
-            <div class="flex-1 md:max-w-2xl">
-                <section class="max-w-xl space-y-12">
+            <div class="flex-1 md:max-w-3xl">
+                <section class="max-w-3xl space-y-12">
                     <slot />
                 </section>
             </div>
