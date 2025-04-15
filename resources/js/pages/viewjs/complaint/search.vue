@@ -1,27 +1,6 @@
 <script setup lang="ts">
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-
-import { ref, onMounted } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import DeleteUser from '@/components/DeleteUser.vue';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -38,8 +17,8 @@ const breadcrumbs: BreadcrumbItem[] = [{
     href: '/complaint/search',
 },];
 
-const page = usePage<SharedData>();
-const user = page.props.auth.user as User;
+//const page = usePage<SharedData>();
+//const user = page.props.auth.user as User;
 
 const form = useForm({
     'accountnumber': "",
@@ -66,13 +45,13 @@ const submit = () => {
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
                         <Input id="accountnumber" class="mt-1 block w-full" required ref="accountnumber"
-                            v-model="form.accountnumber" autofocus @input="input" autocomplete="accountnumber"
+                            v-model="form.accountnumber" autofocus autocomplete="accountnumber"
                             placeholder="accountnumber" />
                         <InputError class="mt-2" :message="form.errors.accountnumber" />
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
-                            <Button :disabled="form.processing" @click="click">Search</Button>
+                            <Button :disabled="form.processing">Search</Button>
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
