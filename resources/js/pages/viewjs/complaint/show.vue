@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
-import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -65,6 +64,18 @@ const submit = () => {
     });
 };
 
+import QRCode from 'qrcode';
+const imageQRCode = ref();
+// With promises
+QRCode.toDataURL(props.complaint.accountnumber)
+  .then(url => {
+    imageQRCode.value = url;
+    //console.log(url)
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
 </script>
 
 <template>
@@ -77,6 +88,12 @@ const submit = () => {
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
 
                 <form @submit.prevent="submit" class="space-y-6">
+                    <div class="grid gap-2 mx-auto">
+                        <Label for="accountnumber">QR Code</Label>
+                        <div class=" flex w-100">
+                            <img class=" w-70 border-3 rounded-lg mx-auto" :src="imageQRCode"/>
+                        </div>
+                    </div>
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
                         <Input id="accountnumber" class="mt-1 block w-full" v-model="form.accountnumber" required

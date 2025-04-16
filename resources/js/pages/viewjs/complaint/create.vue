@@ -192,13 +192,15 @@ const startCam = () => {
                                     <h1 class=" translate-y-6 text-amber-800">
                                         Active Webcam Video
                                     </h1>
-                                    <canvas id="canvas" class="border-4 absolute top-0 left-0 z-0 rounded-lg overflow-hidden">
+                                    <canvas id="canvas"
+                                        class="border-4 absolute top-0 left-0 z-0 rounded-lg overflow-hidden">
                                     </canvas>
                                     <div class="camera border-4 z-10  rounded-lg overflow-hidden">
                                         <video id="video">Video stream not available.</video>
                                     </div>
                                     <div class="z-100 -translate-y-15">
-                                        <button @click="startCam" class="p-2 rounded-full my-auto text-white bg-green-600 hover:bg-green-400 active:bg-violet-700"
+                                        <button @click="startCam"
+                                            class="p-2 rounded-full my-auto text-white bg-green-600 hover:bg-green-400 active:bg-violet-700"
                                             id="startbutton">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
