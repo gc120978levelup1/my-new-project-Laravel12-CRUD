@@ -100,12 +100,12 @@ const submit = () => {
                     <div className="flex flex-row gap-4 p-2 sm:flex-row justify-center items-center min-w-2xs">
                         <Link :href="prev_page_url" 
                             class="flex p-2 px-2 rounded  text-gray-400 bg-red-950 m-1 w-10 sm:w-10 justify-center items-center hover:bg-red-800 active:bg-red-700"
-                            :class="{ disabled: prev_page_url }">
+                            :disabled="prev_page_url">
                             <<|
                         </Link>
                         <Link :href="next_page_url"
                             class="flex p-2 px-2 rounded  text-gray-400 bg-red-950 m-1 w-10 sm:w-10  ml-auto justify-center items-center hover:bg-red-800 active:bg-red-700"
-                            :class="{ disabled: next_page_url }">
+                            :disabled="next_page_url">
                             |>>
                         </Link>
                     </div>
