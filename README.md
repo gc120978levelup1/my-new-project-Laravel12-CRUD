@@ -26,11 +26,12 @@ php artisan key:generate
 php artisan storage:link
 php artisan migrate
 ```
+
 ### Invoke Local Server
 
 ```sh
 composer run dev
-```sh
+```
 
 ## Capabilitites
 
