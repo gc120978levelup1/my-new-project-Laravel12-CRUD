@@ -15,6 +15,7 @@ This code is used as reference control for many purposes and act as a guide to e
 * For Components: https://www.shadcn-vue.com/
 * For SVG Icons: https://lucide.dev/icons/
 * JPG to SVG Converter: https://www.freeconvert.com/svg-converter
+* Tailwind CSS: https://tailwindcss.com/
 
 ## Initialize your Laravel project (invoke the commands listed to Git Bash Shell)
 
