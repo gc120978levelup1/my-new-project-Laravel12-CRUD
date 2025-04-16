@@ -1,6 +1,6 @@
 # Demo CRUD using Laravel + Vue3 ([Laravel 12](https://laravel.com/docs/12.x/installation))
 
-This is code will be used as reference guide for many purposes and act as a guide to easily implement common practices.
+This code is used as reference control for many purposes and act as a guide to easily implement common BE+FE practices.
 
 ## Pre-requisite before using serving this web app
 
