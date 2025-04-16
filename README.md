@@ -2,14 +2,15 @@
 
 This code is used as reference control for many purposes and act as a guide to easily implement common BE+FE practices.
 
-## Pre-requisite before using serving this web app
+## Pre-requisite before using and serving this web app
 
+* [VSCode](https://code.visualstudio.com/download)
 * [Postgres Database](https://www.postgresql.org/download/)
+* [Composer](https://getcomposer.org/download/)
+* [Nodejs](https://nodejs.org/en/download)
 * [Git](https://git-scm.com/downloads)
-* [Composer](https://getcomposer.org/download/)  
 * [Laravel](https://laravel.com/docs/12.x/installation)
 * [Vue3](https://vuejs.org/)
-* [Nodejs](https://nodejs.org/en/download)
 
 ## Sites Services Used
 
