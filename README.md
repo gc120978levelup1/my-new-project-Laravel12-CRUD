@@ -10,7 +10,13 @@ This code is used as reference control for many purposes and act as a guide to e
 * [Laravel](https://laravel.com/docs/12.x/installation) 
 * [Nodejs](https://nodejs.org/en/download)
 
-### Initialize your Laravel project (invoke the commands listed to Git Bash Shell)
+## Sites Services Used
+
+* For Components: https://www.shadcn-vue.com/
+* For SVG Icons: https://lucide.dev/icons/
+* JPG to SVG Converter: https://www.freeconvert.com/svg-converter
+
+## Initialize your Laravel project (invoke the commands listed to Git Bash Shell)
 
 Note: copy and paste the command listed
 
@@ -43,10 +49,12 @@ composer run dev
 * Write and Read QRCODE used for Search Queue
 * Take Pictures
 
-## Deploymnet Server
+## Deploymnet
+
+### Host
 
 * https://cloud.laravel.com/
 
-## Deployment Site
+### Deployment Site
 
 * https://c2custcomplaints-master-h24dus.laravel.cloud/
