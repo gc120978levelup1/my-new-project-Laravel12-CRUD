@@ -7,7 +7,8 @@ This code is used as reference control for many purposes and act as a guide to e
 * [Postgres Database](https://www.postgresql.org/download/)
 * [Git](https://git-scm.com/downloads)
 * [Composer](https://getcomposer.org/download/)  
-* [Laravel](https://laravel.com/docs/12.x/installation) 
+* [Laravel](https://laravel.com/docs/12.x/installation)
+* [Vue3](https://vuejs.org/)
 * [Nodejs](https://nodejs.org/en/download)
 
 ## Sites Services Used
