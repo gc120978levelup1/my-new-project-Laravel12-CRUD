@@ -1,9 +1,7 @@
 <script setup lang="ts">
 
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-
 import { ref } from 'vue'
-
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -56,13 +54,10 @@ const startWebCam = (imageRef, captionRef) => {
         navigator.mediaDevices.getUserMedia({
             video: true,
             audio: false
-        })
-            .then(function (stream) {
+        }).then(function (stream) {
                 streamSrc.value = stream;
                 video.srcObject = stream;
-                //video.play();
-            })
-            .catch(function (err) {
+            }).catch(function (err) {
                 console.log("An error occurred: " + err);
             });
 
@@ -79,16 +74,16 @@ const startWebCam = (imageRef, captionRef) => {
                 streaming = true;
             }
         }, false);
-
         clearphoto();
-    }
+    };
+    
     function clearphoto() {
         var context = canvas.getContext('2d');
         context.fillStyle = "#AAA";
         context.fillRect(0, 0, canvas.width, canvas.height);
-
         var data = canvas.toDataURL('image/png');
-    }
+    };
+    
     function takepicture() {
         var context = canvas.getContext('2d');
         if (width && height) {
@@ -105,9 +100,11 @@ const startWebCam = (imageRef, captionRef) => {
         } else {
             clearphoto();
         }
-    }
+    };
+    
     startup();
-}
+};
+    
 const startCam = () => {
     form.accountnumber = "";
     startWebCam(imagestr, imageremarks);
@@ -120,16 +117,14 @@ const startCam = () => {
     };
 
     codeReader.value = new BrowserMultiFormatReader();
-
     codeReader.value.decodeFromVideoDevice(streamSrc.value, 'video', (result, err) => {
         if (result) {
             if (showcam.value === true){
+                localStorage.setItem("accountnumber_jaed", result.text);
                 form.accountnumber = result.text;
                 showcam.value = false;
                 submit();
             }
-            console.log(result);
-            localStorage.setItem("accountnumber_jaed", result.text);
             codeReader.value.reset();
         }
         if (err && !(err)) {
