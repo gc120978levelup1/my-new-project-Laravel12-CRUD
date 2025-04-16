@@ -3,6 +3,7 @@
 
 ## Pre-requisite before using WebApp
 
+* [Postgres Database](https://www.postgresql.org/download/)
 * [Git](https://git-scm.com/downloads)
 * [Composer](https://getcomposer.org/download/)  
 * [Laravel](https://laravel.com/docs/12.x/installation) 
@@ -41,6 +42,10 @@ composer run dev
 * Write and Read QRCODE used for Search Queue
 * Take Pictures
 
-### Deploymnet
+## Deploymnet Server
 
 * https://cloud.laravel.com/
+
+## Deployment Site
+
+* https://c2custcomplaints-master-h24dus.laravel.cloud/
