@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -20,7 +21,13 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('auth/Register');
+
+        $users = App\Models\User::limit(1)->get();
+        if ($users->count() == 0) {
+            return Inertia::render('auth/RegisterFirst');
+        }else{
+            return Inertia::render('auth/Register');
+        }
     }
 
     /**
@@ -39,12 +46,15 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        if (!(Auth::user() && Auth::user()->role == 'admin')) {
+            Auth::login($user);
+        }
 
         return to_route('dashboard');
     }

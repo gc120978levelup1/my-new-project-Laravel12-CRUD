@@ -1,8 +1,7 @@
 
 <script setup lang="ts">
 
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import DeleteUser from '@/components/DeleteUser.vue';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -16,15 +15,7 @@ import { ref } from 'vue';
 interface Props {
     complaint: Object,
 }
-
 const props = defineProps<Props>();
-
-const headTitle = "Modify Customer Complaint";
-const description = "Input data change for customer complaint.";
-const breadcrumbs: BreadcrumbItem[] = [{
-    title: 'Edit Complaint',
-    href: '/complaint/edit',
-},];
 
 const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
@@ -137,6 +128,12 @@ const startCam = () => {
     showcam.value = !showcam.value;
 }
 
+const headTitle = "Modify Customer Complaint";
+const description = "Input data change for customer complaint.";
+const breadcrumbs: BreadcrumbItem[] = [{
+    title: 'Edit Complaint',
+    href: '/complaint/edit',
+},];
 
 </script>
 

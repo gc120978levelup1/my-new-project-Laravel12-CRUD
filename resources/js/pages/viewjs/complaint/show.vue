@@ -80,18 +80,16 @@ QRCode.toDataURL(props.complaint.accountnumber)
 
 <template>
     <Toaster />
-    <AppLayout :breadcrumbs="breadcrumbs">
-
-        <Head v-bind:title="headTitle" />
+    <AppLayout :breadcrumbs="breadcrumbs"  class=" absolute top-0">
+        <Head :title="headTitle" class=" absolute top-0"/>
         <SettingsLayout>
             <div class="flex flex-col space-y-6 max-w-xl">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
-
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2 mx-auto">
                         <Label for="accountnumber">QR Code</Label>
                         <div class=" flex w-100">
-                            <img class=" w-70 border-3 rounded-lg mx-auto" :src="imageQRCode"/>
+                            <img class=" sm:w-70 border-3 rounded-lg mx-auto" :src="imageQRCode"/>
                         </div>
                     </div>
                     <div class="grid gap-2">
@@ -131,10 +129,6 @@ QRCode.toDataURL(props.complaint.accountnumber)
 
                     <div v-if="form.picture" class="grid gap-2">
                         <img :src="form.picture" alt="" srcset="" class="border-2 rounded-lg">
-                    </div>
-
-                    <div class="grid gap-2">
-                        <span class="">{{ form.picture }}</span>
                     </div>
 
                     <div class="grid gap-2">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { Head, Link, useForm, usePage, } from '@inertiajs/vue3';
+import { ref, } from 'vue';
+import { Head, useForm, usePage, } from '@inertiajs/vue3';
 
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
@@ -11,22 +11,19 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
+// Start of retreiving single item data to be shown in the form from create controller
 interface Props {
-    complaints: { type: Array, },
+    complaint: Object,
 }
+const props = defineProps<Props>();
+// End of retreiving single item data to be shown
 
-defineProps<Props>();
-
-const headTitle = "Create New Customer Complaint";
-const description = "Create a new customer complaint.";
-const breadcrumbs: BreadcrumbItem[] = [{
-    title: 'Create New Complaint',
-    href: '/complaint/create',
-},];
-
+// Start of retreiving current user data
 const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
+// End of retreiving  current user data
 
+// Start of declation for form input data
 const form = useForm({
     accountnumber: "",
     name: "",
@@ -36,24 +33,28 @@ const form = useForm({
     picture: "xxxxx",
     image_file: null,
 });
+// End of declation for form input data
 
-// Register the form with into local storage
-//import mem from '@/extra/gboi_memory';
-//mem.register('complaint', form);
-
+// Start of declaration of Misc. Event handlers
 const imageURL = ref();
 const onPictureChange = (event) => {
     const files = event.target.files;
     imageURL.value = URL.createObjectURL(files[0]);
     form.image_file = files[0];
 };
+// End of declaration of Misc. Event handlers
 
+// Start of declaration of main submit event handler
 const submit = () => {
     form.post(route('complaint.post'), {
         preserveScroll: true,
     });
 };
+// End1 of declaration of main submit event handler
 
+// Start Declaration of Web Cam Function to take photo
+// find <!-- Start of Web Cam Component --> to see the html component
+// find #WebCam to see the css file component. it requires scss
 const imagestr = ref(null);
 const imageremarks = ref(null);
 const showcam = ref(false);
@@ -69,7 +70,6 @@ const startWebCam = (imageRef, captionRef) => {
         video = document.getElementById('video');
         canvas = document.getElementById('canvas');
         startbutton = document.getElementById('startbutton');
-
         navigator.mediaDevices.getUserMedia({
             video: true,
             audio: false
@@ -117,10 +117,10 @@ const startWebCam = (imageRef, captionRef) => {
             canvas.height = height;
             context.drawImage(video, 0, 0, width, height);
             var data = canvas.toDataURL('image/png');
-            imageRef.value = canvas;
-            imageURL.value = data;
+            imageRef.value = canvas;   //////////////////////////////////// updates outside variable
+            imageURL.value = data;     //////////////////////////////////// updates outside variable
             canvas.toBlob((blob) => {
-                form.image_file = blob;
+                form.image_file = blob; //////////////////////////////////// updates outside variable
             });
             captionRef.value = "Portrait Picture";
         } else {
@@ -129,11 +129,20 @@ const startWebCam = (imageRef, captionRef) => {
     }
     startup();
 }
-
-const startCam = () => {
+const startCam = () => {               //////////////////////////////////// used by outside DOM to turn on the camera
     startWebCam(imagestr, imageremarks);
     showcam.value = !showcam.value;
 }
+// End Declaration of Web Cam Function
+
+//Start of Declaration of Page Title
+const headTitle = "Create New Customer Complaint";
+const description = "Create a new customer complaint.";
+const breadcrumbs: BreadcrumbItem[] = [{
+    title: 'Create New Complaint',
+    href: '/complaint/create',
+},];
+//End of Declaration of Page Title
 
 </script>
 
@@ -144,6 +153,7 @@ const startCam = () => {
         <SettingsLayout>
             <div class="flex flex-col space-y-6  max-w-xl">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
+
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
@@ -185,6 +195,7 @@ const startCam = () => {
                         <div v-if="imageURL && !showcam" class="grid gap-2">
                             <img :src="imageURL" alt="" srcset="" class="border-2 rounded-lg">
                         </div>
+
                         <!-- Start of Web Cam Component -->
                         <div class="relative">
                             <div v-show="showcam" id="WebCam" class="text-white absolute bottom-0">
@@ -216,6 +227,7 @@ const startCam = () => {
                             </div>
                         </div>
                         <!-- End of Web Cam Component -->
+
                         <div class="flex">
                             <Input type="file" accept="image/*" @change="onPictureChange" id="picture"
                                 class="mt-1 block w-full rounded-r-none" autocomplete="picture" placeholder="picture" />

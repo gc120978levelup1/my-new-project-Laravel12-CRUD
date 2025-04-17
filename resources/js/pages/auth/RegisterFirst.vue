@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
+import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/AppLayout.vue';
-import AuthBase from '@/layouts/AuthLayoutRegister.vue';
-import { BreadcrumbItem } from '@/types';
+import AuthBase from '@/layouts/AuthLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
 const form = useForm({
     name: '',
     email: '',
-    role: 'guest',
+    role: 'admin',
     password: 'password123',
     password_confirmation: 'password123',
 });
@@ -27,15 +26,11 @@ const submit = () => {
 //Start of Declaration of Page Title
 const headTitle = "Register User";
 const description = "New users must be registered here first.";
-const breadcrumbs: BreadcrumbItem[] = [{
-    title: 'New User Registration',
-    href: '/register',
-},];
+
 //End  of Declaration of Page Title
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
     <AuthBase :title="headTitle" :description="description">
         <Head title="Register" />
 
@@ -93,8 +88,11 @@ const breadcrumbs: BreadcrumbItem[] = [{
                 </Button>
             </div>
 
-            <br/>
+            <div class="text-center text-sm text-muted-foreground">
+                Already have an account?
+                <TextLink :href="route('login')" class="underline underline-offset-4" :tabindex="6">Log in</TextLink>
+            </div>
         </form>
     </AuthBase>
-</AppLayout>
+
 </template>

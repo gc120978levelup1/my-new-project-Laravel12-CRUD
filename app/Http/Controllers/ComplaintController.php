@@ -12,24 +12,21 @@ use App\Http\Requests\UpdateComplaintRequest;
 
 class ComplaintController extends Controller
 {
-    private $message;
     /**
      * Display a listing of the resource.
      */
     public function index(StoreComplaintRequest $request)
     {
+        $nosOfPagination = 6; // rows per page
         if ($request["accountnumber"]) { // if index has search parameter
-            //('column', 'like', '%SearchString%')
-            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->cursorPaginate(5);
-            return Inertia::render('viewjs/complaint/index', [
-                'pagination' => $complaint,
-                'accountnumber' => $request["accountnumber"],
-            ]);
+            // paginated select * from complaints where accountnumber like %request% command
+            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->cursorPaginate($nosOfPagination);
         } else // if index has no search parameter
-            return Inertia::render('viewjs/complaint/index', [
-                //'complaints' => Complaint::get()
-                'pagination' => Complaint::where("accountnumber","like","%")->cursorPaginate(5),
-            ]);
+            // paginated select * from complaints command
+            $complaint = Complaint::cursorPaginate($nosOfPagination);
+        return Inertia::render('viewjs/complaint/index', [
+            'pagination' => $complaint,
+        ]);
     }
 
     /**

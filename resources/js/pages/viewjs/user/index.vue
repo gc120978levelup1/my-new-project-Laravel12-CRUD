@@ -49,7 +49,7 @@ interface Props {
     pagination: { type: Array, },
 }
 const props = defineProps<Props>();
-const complaints = ref(props.pagination.data);
+const users = ref(props.pagination.data);
 const prev_page_url = ref(props.pagination.prev_page_url);
 const next_page_url = ref(props.pagination.next_page_url);
 // End of retreiving paginated data from index controller
@@ -60,11 +60,11 @@ const user = page.props.auth.user as User;
 // End of retreiving  current user data
 
 //Start of Declaration of Page Title
-const headTitle = "Complaint Master List";
-const description = "Master list of customer complaint.";
+const headTitle = "User Master List";
+const description = "Master list of users.";
 const breadcrumbs: BreadcrumbItem[] = [{
-    title: 'Complaint Index',
-    href: '/complaint',
+    title: 'Users Index',
+    href: '/user',
 },];
 //End  of Declaration of Page Title
 
@@ -80,9 +80,9 @@ const breadcrumbs: BreadcrumbItem[] = [{
                 <div class="text-gray-900 dark:text-gray-100 border rounded">
 
                     <!-- Start of Backward and Forward Button for the Pagination Table -->
-                    <div className="flex flex-row gap-1 p-2 sm:flex-row justify-left items-center min-w-2xs">
+                    <div className="flex flex-row gap-4 p-2 sm:flex-row justify-left items-center min-w-2xs">
                         <Link :href="prev_page_url"
-                            class="flex p-2 px-2 rounded  text-gray-400 bg-red-950 m-1 w-10 sm:w-10 justify-center items-left hover:bg-red-800 active:bg-red-700"
+                            class="flex p-2 px-2 rounded  text-gray-400 bg-red-950 m-1 w-10 sm:w-10 justify-center items-center hover:bg-red-800 active:bg-red-700"
                             :disabled="prev_page_url">
                             <<|
                         </Link>
@@ -106,21 +106,18 @@ const breadcrumbs: BreadcrumbItem[] = [{
                                         #
                                     </th>
                                     <th scope="col" class="px-3 py-4">
-                                        Accountnumber
-                                    </th>
-                                    <th scope="col" class="px-3 py-4">
                                         Name
                                     </th>
                                     <th scope="col" class="px-3 py-4">
-                                        Address
+                                        Email Address
                                     </th>
                                     <th scope="col" class="px-3 py-4">
-                                        Description
+                                        Role
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(complaint, index) in complaints" :key="index"
+                                <tr v-for="(xuser, index) in users" :key="index"
                                     class="border-b border-neutral-200 dark:border-white/10">
                                     <td class="flex whitespace-nowrap px-6 py-1">
                                         <DropdownMenu>
@@ -134,19 +131,19 @@ const breadcrumbs: BreadcrumbItem[] = [{
                                                 <div
                                                     class="flex p-2 space-y-2 border-b border-neutral-200 dark:border-white/10">
                                                     <Link :href="route(
-                                                        'complaint.show',
-                                                        [complaint.id]
+                                                        'user.show',
+                                                        [xuser.id]
                                                     )
                                                         " class="p-2 px-5 rounded my-auto text-white bg-green-600 m-2">
                                                     View
                                                     </Link>
 
                                                     <Link :href="route(
-                                                        'complaint.edit',
-                                                        { id: complaint.id }
+                                                        'user.edit',
+                                                        { id: xuser.id }
                                                     )
                                                         " class="p-2 px-6 rounded my-auto text-white bg-blue-500 m-2">
-                                                    Edit
+                                                    Reset
                                                     </Link>
 
                                                     <Dialog>
@@ -169,50 +166,38 @@ const breadcrumbs: BreadcrumbItem[] = [{
                                                             <div className="py-0">
                                                                 <div
                                                                     className="flex flex-col sm:flex-row items-center gap-4">
-                                                                    <div v-if="complaint.picture" class="w-full">
-                                                                        <img :src="complaint.picture" alt="" srcset=""
+                                                                    <div v-if="xuser.picture" class="w-full">
+                                                                        <img :src="xuser.picture" alt="" srcset=""
                                                                             class="border-2 rounded-lg">
                                                                     </div>
                                                                     <div className="flex flex-col gap-2 py-4 w-100 sm:max-w-lg">
                                                                         <div className="grid items-center gap-2 w-100">
-                                                                            <Label for="accountnumber">
-                                                                                Account Number : &nbsp;&nbsp;{{
-                                                                                    complaint.accountnumber }}
-                                                                            </Label>
-                                                                        </div>
-                                                                        <div className="grid items-center gap-2 w-100">
                                                                             <Label for="name">
-                                                                                Name : &nbsp;&nbsp;{{ complaint.name }}
+                                                                                Name : &nbsp;&nbsp;{{
+                                                                                    xuser.name }}
                                                                             </Label>
                                                                         </div>
                                                                         <div className="grid items-center gap-2 w-100">
-                                                                            <Label for="complaint">
-                                                                                Address : &nbsp;&nbsp;{{
-                                                                                    complaint.address }}
+                                                                            <Label for="email">
+                                                                                Email : &nbsp;&nbsp;{{ xuser.email }}
                                                                             </Label>
                                                                         </div>
                                                                         <div className="grid items-center gap-2 w-100">
-                                                                            <Label for="complaint">
-                                                                                Complaint : &nbsp;&nbsp;{{
-                                                                                    complaint.complaint }}
-                                                                            </Label>
-                                                                        </div>
-                                                                        <div className="grid items-center gap-2 w-100">
-                                                                            <Label for="description">
-                                                                                Description : &nbsp;&nbsp;{{
-                                                                                    complaint.description }}
+                                                                            <Label for="role">
+                                                                                Role : &nbsp;&nbsp;{{
+                                                                                    xuser.role }}
                                                                             </Label>
                                                                         </div>
                                                                         <div className="grid items-center gap-2 w-100">
                                                                             <Label for="created_at">
                                                                                 created_at : &nbsp;&nbsp;{{
-                                                                                    complaint.created_at }}
+                                                                                    xuser.created_at }}
                                                                             </Label>
                                                                         </div>
                                                                         <div className="grid items-center gap-2 w-100">
                                                                             <Label for="updated_at">
                                                                                 updated_at : &nbsp;&nbsp;{{
-                                                                                    complaint.updated_at }}
+                                                                                    xuser.updated_at }}
                                                                             </Label>
                                                                         </div>
                                                                     </div>
@@ -221,8 +206,8 @@ const breadcrumbs: BreadcrumbItem[] = [{
 
                                                             <DialogFooter>
                                                                 <Link :href="route(
-                                                                    'complaint.delete',
-                                                                    { id: complaint.id })"
+                                                                    'user.delete',
+                                                                    { id: xuser.id })"
                                                                     class="flex p-2 px-1 rounded my-auto text-white bg-red-500 m-1 justify-center items-center w-35">
                                                                 Delete Forever
                                                                 </Link>
@@ -234,24 +219,21 @@ const breadcrumbs: BreadcrumbItem[] = [{
 
                                             </DropdownMenuContent>
                                         </DropdownMenu>
-                                        <div v-if="complaint.picture" class="grid gap-2 w-[50px]">
-                                            <img :src="complaint.picture" alt="" srcset="" class="border-2 rounded-lg">
+                                        <div v-if="xuser.picture" class="grid gap-2 w-[50px]">
+                                            <img :src="xuser.picture" alt="" srcset="" class="border-2 rounded-lg">
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{ complaint.id }}
+                                        {{ xuser.id}}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{ complaint.accountnumber }}
+                                        {{ xuser.name }}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{ complaint.name }}
+                                        {{ xuser.email }}
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-2">
-                                        {{ complaint.address }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-2">
-                                        {{ complaint.description }}
+                                        {{ xuser.role }}
                                     </td>
                                 </tr>
                             </tbody>

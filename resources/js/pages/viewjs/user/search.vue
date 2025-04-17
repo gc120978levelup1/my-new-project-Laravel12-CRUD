@@ -18,14 +18,14 @@ const user = page.props.auth.user as User;
 
 // Start of Declaration for User Input Form
 const form = useForm({
-    'accountnumber': localStorage.getItem("accountnumber_jaed"),
+    'email': localStorage.getItem("email_jaed"),
 });
 // End of Declaration for User Input Form
 
 // Start User Input Form Submittal Event Handler, Send Message To the Router
 const submit = () => {
-    localStorage.setItem("accountnumber_jaed",form.accountnumber); // optional saving of form input
-    form.get(route('complaint.index'), {
+    localStorage.setItem("email_jaed",form.email); // optional saving of form input
+    form.get(route('user.index'), {
         preserveScroll: true,
     });
 };
@@ -87,7 +87,7 @@ const startWebCam = (imageRef: Ref<null, null>, captionRef: Ref<null, null>) => 
 };
 
 const startCam = () => {
-    form.accountnumber = "";
+    form.email = "";
     startWebCam(imagestr, imageremarks);
     showcam.value = !showcam.value;
     if (!showcam.value) {
@@ -102,7 +102,7 @@ const startCam = () => {
         if (result) {
             if (showcam.value === true){
                 localStorage.setItem("accountnumber_jaed", result.text);
-                form.accountnumber = result.text;
+                form.email= result.text;
                 showcam.value = false;
                 submit();
             }
@@ -110,17 +110,17 @@ const startCam = () => {
         }
         if (err && !(err)) {
             console.error(err);
-            form.accountnumber = err;
+            form.email = err;
         }
     });
 };
 
 //Start of Declaration of Page Title
-const headTitle = "Complaint Search";
-const description = "Searches for Complaints in the Master list of customer complaint.";
+const headTitle = "User Search";
+const description = "Searches for Users in the Master list of users.";
 const breadcrumbs: BreadcrumbItem[] = [{
-    title: 'Complaint Search',
-    href: '/complaint/search',
+    title: 'User Search',
+    href: '/user/search',
 },];
 
 </script>
@@ -136,11 +136,11 @@ const breadcrumbs: BreadcrumbItem[] = [{
 
                 <form @submit.prevent="submit" class="space-y-6" ref="myForm">
                     <div class="grid gap-2">
-                        <Label for="accountnumber">Account Number</Label>
+                        <Label for="email">User Email Address</Label>
 
                         <div class="flex">
-                            <Input id="accountnumber" class="mt-1 block w-full" required ref="accountnumber"
-                                v-model="form.accountnumber" autofocus autocomplete="accountnumber"
+                            <Input id="accountnumber" class="mt-1 block w-full" required ref="email"
+                                v-model="form.email" autofocus autocomplete="accountnumber"
                                 placeholder="accountnumber" />
                             <Button type="button" @click="startCam" class="mt-1 rounded-l-none bg-amber-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -155,7 +155,7 @@ const breadcrumbs: BreadcrumbItem[] = [{
                             </Button>
                         </div>
 
-                        <InputError class="mt-2" :message="form.errors.accountnumber" />
+                        <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
                     <!-- Start of QRCODE SCANNER Web Cam Component -->

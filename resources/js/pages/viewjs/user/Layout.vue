@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Table',
-        href: '/complaint',
+        href: '/user/index',
     },
     {
         title: 'Search',
-        href: '/complaint/search',
+        href: '/user/search',
     },
     {
         title: 'New',
-        href: '/complaint/create',
+        href: '/register',
     },
 
 ];
@@ -28,7 +27,7 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
 
 <template>
     <div class="px-4 py-6">
-        <Heading title="Complaints" description="Manage the list of customer complaints" class="hidden sm:block"/>
+        <Heading title="Users" description="Manage the list of users" class="hidden md:block"/>
 
         <div class="flex flex-col space-y-8 md:space-y-0 lg:flex-row lg:space-x-12 lg:space-y-0">
             <aside class="w-full max-w-xl lg:w-18">
