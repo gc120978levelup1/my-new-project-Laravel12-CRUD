@@ -19,6 +19,12 @@ This code is used as reference control for many purposes and act as a guide to e
 * JPG to SVG Converter: https://www.freeconvert.com/svg-converter
 * Tailwind CSS: https://tailwindcss.com/
 
+## Vue3 Custom Components Used
+
+* [vue2-face-recog](https://github.com/gc120978levelup1/vue3-face-recog)
+* [vue3-camera-qrcode-reader](https://github.com/gc120978levelup1/vue3-camera-qrcode-reader)
+* [vue3-ocr-ph-driver-license-parser](https://github.com/gc120978levelup1/vue3-ocr-ph-driver-license-parser)
+
 ## Initialize your Laravel project (invoke the commands listed to Git Bash Shell)
 
 Note: copy and paste the command listed
