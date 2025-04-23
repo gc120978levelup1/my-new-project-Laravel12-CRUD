@@ -26,7 +26,7 @@ return [
 
     'BUCKET_DISK1' => 's3',          // Amazon Web Service S3 bucket
     'BUCKET_DISK2' => 'r2',          // cloud flare r2
-    'BUCKET_DISK3' => 'gdisk01',     // customize disk name from S3-compatible disk
+    'BUCKET_DISK3' => 's3',          //'gdisk01',     // customize disk name from S3-compatible disk
     'BUCKET_DISK4' => 'custom_name4',
     'BUCKET_DISK5' => 'custom_name5',
     'BUCKET_DISK6' => 'custom_name6',
