@@ -47,86 +47,30 @@ const submit = () => {
     });
 };
 
-const imagestr = ref(null);
-const imageremarks = ref(null);
-const showcam = ref(false);
-const startWebCam = (imageRef, captionRef) => {
-    var width = 620; // We will scale the photo width to this
-    var height = 0; // This will be computed based on the input stream
-    var streaming = false;
-    var video = null;
-    var canvas = null;
-    var startbutton = null;
+// Start Declaration of Web Cam Function to take photo
+// find <!-- Start of Web Cam Component --> to see the html component
+// find #WebCam to see the css file component. it requires scss
+import {Vue3CameraQrcodeReader} from 'vue3-camera-qrcode-reader';
 
-    function startup() {
-        video = document.getElementById('video');
-        canvas = document.getElementById('canvas');
-        startbutton = document.getElementById('startbutton');
-
-        navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: false
-        })
-            .then(function (stream) {
-                video.srcObject = stream;
-                video.play();
-            })
-            .catch(function (err) {
-                console.log("An error occurred: " + err);
-            });
-
-        video.addEventListener('canplay', function (ev) {
-            if (!streaming) {
-                height = video.videoHeight / (video.videoWidth / width);
-                if (isNaN(height)) {
-                    height = width / (4 / 3);
-                }
-                video.setAttribute('width', width);
-                video.setAttribute('height', height);
-                canvas.setAttribute('width', width);
-                canvas.setAttribute('height', height);
-                streaming = true;
-            }
-        }, false);
-
-        startbutton.addEventListener('click', function (ev) {
-            takepicture();
-            ev.preventDefault();
-        }, false);
-
-        clearphoto();
-    }
-    function clearphoto() {
-        var context = canvas.getContext('2d');
-        context.fillStyle = "#AAA";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        var data = canvas.toDataURL('image/png');
-    }
-    function takepicture() {
-        var context = canvas.getContext('2d');
-        if (width && height) {
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(video, 0, 0, width, height);
-            var data = canvas.toDataURL('image/png');
-            imageRef.value = canvas;
-            imageURL.value = data;
-            canvas.toBlob((blob) => {
-                form.image_file = blob;
-            });
-            captionRef.value = "Portrait Picture";
-        } else {
-            clearphoto();
-        }
-    }
-    startup();
-}
+const camera = ref(null);
+const show_picture = ref(true);
 
 const startCam = () => {
-    startWebCam(imagestr, imageremarks);
-    showcam.value = !showcam.value;
-}
+    camera.value.flip();
+    show_picture.value = !show_picture.value;
+};
+
+const handleTakePix = (event: { URL: object, File: object }) => {
+    imageURL.value = event.URL;   // url
+    form.image_file = event.File; // file
+    show_picture.value = true;
+};
+
+const handleEncodeQRCode = (event: { QRCode: string }) => {
+    console.log(event.QRCode); // QR Code Value in Text/string form
+    show_picture.value = true;
+};
+// End Declaration of Web Cam Function
 
 const headTitle = "Modify Customer Complaint";
 const description = "Input data change for customer complaint.";
@@ -183,39 +127,14 @@ const breadcrumbs: BreadcrumbItem[] = [{
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="image">Picture</Label>
-                        <div v-if="imageURL && !showcam" class="grid gap-2">
+                        <Label for="picture">Picture</Label>
+                        <div v-if="imageURL && show_picture" class="grid gap-2">
                             <img :src="imageURL" alt="" srcset="" class="border-2 rounded-lg">
                         </div>
-                        <!-- Start of Web Cam Component -->
-                        <div class="relative">
-                            <div v-show="showcam" id="WebCam" class="text-white absolute bottom-0">
-                                <div class="contentarea relative">
-                                    <h1 class=" translate-y-6 text-amber-800">
-                                        Active Webcam Video
-                                    </h1>
-                                    <canvas id="canvas" class="border-4 absolute top-0 left-0 z-0 rounded-lg overflow-hidden">
-                                    </canvas>
-                                    <div class="camera border-4 z-10  rounded-lg overflow-hidden">
-                                        <video id="video">Video stream not available.</video>
-                                    </div>
-                                    <div class="z-100 -translate-y-15">
-                                        <button type="button" @click="startCam" class="p-2 rounded-full my-auto text-white bg-green-600 hover:bg-green-400 active:bg-violet-700"
-                                            id="startbutton">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-instagram-icon lucide-instagram">
-                                                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                                                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End of Web Cam Component -->
+
+                        <Vue3CameraQrcodeReader ref="camera" visible="false" @onTakePicture="handleTakePix"
+                            @onEncodeQRCode="handleEncodeQRCode" />
+
                         <div class="flex">
                             <Input type="file" accept="image/*" @change="onPictureChange" id="picture"
                                 class="mt-1 block w-full rounded-r-none" autocomplete="picture" placeholder="picture" />

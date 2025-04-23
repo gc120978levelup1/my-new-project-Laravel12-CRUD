@@ -24,13 +24,14 @@ const form = useForm({
 
 // Start User Input Form Submittal Event Handler, Send Message To the Router
 const submit = () => {
-    localStorage.setItem("accountnumber_jaed",form.accountnumber); // optional saving of form input
+    localStorage.setItem("accountnumber_jaed", form.accountnumber); // optional saving of form input
     form.get(route('complaint.index'), {
         preserveScroll: true,
     });
 };
 // End User Input Form Submittal Event Handler
 
+/*
 // Start of Declaration of QRCode Reader with Video Projection
 import { BrowserMultiFormatReader } from '@zxing/browser';
 const imagestr = ref(null);
@@ -114,6 +115,35 @@ const startCam = () => {
         }
     });
 };
+*/
+
+// Start Declaration of Web Cam Function to take photo
+// find <!-- Start of Web Cam Component --> to see the html component
+// find #WebCam to see the css file component. it requires scss
+import { Vue3CameraQrcodeReader } from 'vue3-camera-qrcode-reader';
+
+const camera = ref(null);
+const show_picture = ref(true);
+
+const startCam = () => {
+    camera.value.flip();
+    show_picture.value = !show_picture.value;
+};
+
+const handleTakePix = (event: { URL: object, File: object }) => {
+    imageURL.value = event.URL;   // url
+    form.image_file = event.File; // file
+    show_picture.value = true;
+};
+
+const handleEncodeQRCode = (event: { QRCode: string }) => {
+    localStorage.setItem("accountnumber_jaed", event.QRCode);
+    form.accountnumber = event.QRCode;
+    submit();
+    console.log(event.QRCode); // QR Code Value in Text/string form
+    show_picture.value = true;
+};
+// End Declaration of Web Cam Function
 
 //Start of Declaration of Page Title
 const headTitle = "Complaint Search";
@@ -157,8 +187,7 @@ const breadcrumbs: BreadcrumbItem[] = [{
 
                         <InputError class="mt-2" :message="form.errors.accountnumber" />
                     </div>
-
-                    <!-- Start of QRCODE SCANNER Web Cam Component -->
+                    <!-- Start of QRCODE SCANNER Web Cam Component
                     <div class="relative">
                         <div v-show="showcam" id="WebCam" class="text-white absolute bottom-0">
                             <div class="contentarea relative">
@@ -176,7 +205,7 @@ const breadcrumbs: BreadcrumbItem[] = [{
                             </div>
                         </div>
                     </div>
-                    <!-- End of QRCODE SCANNER Web Cam Component -->
+                    End of QRCODE SCANNER Web Cam Component -->
 
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
@@ -186,6 +215,16 @@ const breadcrumbs: BreadcrumbItem[] = [{
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
                             </Transition>
                         </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="relative">
+                        <Vue3CameraQrcodeReader ref="camera" visible="false" @onTakePicture="handleTakePix"
+                        @onEncodeQRCode="handleEncodeQRCode" />
                     </div>
                 </form>
             </div>
